@@ -31,7 +31,9 @@ def welcome():
 def transactions_handler():
     if request.method == "POST":
         file = request.files["a_csv"]
-        # import pdb; pdb.set_trace()
+
+        headers = get_headers_from_file(file)   #['Amount', 'Description']
+        print("headers", headers)
         stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
         csv_input = csv.reader(stream)
         for row in csv_input:
@@ -39,11 +41,16 @@ def transactions_handler():
             # ['Amount', ' Description']
             # ['-1.36', 'SWEETGREEN UNION SQUAR NEW YORK, NY, US']
             # ['200.16', 'PAYROLL~ Future Amount: 200.16 ~ Tran: DDIR']
-
         row_count = 10
         return f"you posted {row_count} transactions"
     else:
         return "you getted"
+
+def get_headers_from_file(file):
+    first_row_as_byte = file.stream.readline()
+    first_row_as_string = first_row_as_byte.decode("UTF8")
+    first_row_without_new_line_chars = first_row_as_string.rstrip("\n")
+    return [header.strip() for header in first_row_without_new_line_chars.split(",")]
 
 if __name__ == "__main__":
     app.run()
