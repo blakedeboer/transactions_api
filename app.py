@@ -1,5 +1,5 @@
 from flask import Flask, request
-from models import db
+from models import db, Transaction
 from flask_migrate import Migrate
 from utils import get_row_objects
 
@@ -31,16 +31,8 @@ def welcome():
 def transactions_handler():
     if request.method == "POST":
         file = request.files["a_csv"]
+        # import pdb; pdb.set_trace()
 
-        headers = get_headers_from_file(file)   #['Amount', 'Description']
-        print("headers", headers)
-        stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
-        csv_input = csv.reader(stream)
-        for row in csv_input:
-            print(row)
-            # ['Amount', ' Description']
-            # ['-1.36', 'SWEETGREEN UNION SQUAR NEW YORK, NY, US']
-            # ['200.16', 'PAYROLL~ Future Amount: 200.16 ~ Tran: DDIR']
         row_count = 10
         return f"you posted {row_count} transactions"
     else:
