@@ -1,18 +1,19 @@
 ## Setup
 
 1. Clone repo and cd into the root
-2. Start the virtual environment: `$ source transactions_env/bin/activate`
-3. Add environment variables to `.bash_profile`:
+1. Create a virtual environment: `$ python3 -m venv transactions_env`
+1. Start the virtual environment: `$ source transactions_env/bin/activate`
+1. Add environment variables to `.bash_profile`:
 ```
 export FLASK_APP=app.py #NOTE this might be a bad idea
 export PGDATA=/
 ```
-4. Install dependencies: `$ pip install -r requirements.txt`
-5. Install postgresql: `$ brew install postgres`
-6. (NEED TO FIGURE OUT SECURITY OF DB)
-7. Login to postgres: `$ psql postgres`
-8. From within psql, create database: `CREATE DATABASE mytransactionsdb;`
-9. Run migrations: `$ flask db upgrade` 
+1. Install dependencies: `$ pip install -r requirements.txt`
+1. Install postgresql: `$ brew install postgres`
+1. (NEED TO FIGURE OUT SECURITY OF DB)
+1. Login to postgres: `$ psql postgres`
+1. From within psql, create database: `CREATE DATABASE mytransactionsdb;`
+1. Run migrations: `$ flask db upgrade` 
 
 ## Run the app
 1. From the root directory run `$ flask run`
