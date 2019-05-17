@@ -6,7 +6,7 @@
 1. Add environment variables to `.bash_profile`:
 ```
 export FLASK_APP=app.py #NOTE this might be a bad idea
-export PGDATA=/
+export PGDATA='/usr_/local/var/postgres'
 ```
 1. Install dependencies: `$ pip install -r requirements.txt`
 1. Install postgresql: `$ brew install postgres`
