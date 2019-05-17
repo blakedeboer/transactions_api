@@ -1,4 +1,33 @@
-PostgreSQL Notes:
+## Setup
+
+1. Clone repo and cd into the root
+2. Start the virtual environment: `$ source transactions_env/bin/activate`
+3. Add environment variables to `.bash_profile`:
+```
+export FLASK_APP=app.py #NOTE this might be a bad idea
+export PGDATA=/
+```
+4. Install dependencies: `$ pip install -r requirements.txt`
+5. Install postgresql: `$ brew install postgres`
+6. (NEED TO FIGURE OUT SECURITY OF DB)
+7. Login to postgres: `$ psql postgres`
+8. From within psql, create database: `CREATE DATABASE mytransactionsdb;`
+9. Run migrations: `$ flask db upgrade` 
+
+## Run the app
+1. From the root directory run `$ flask run`
+2. Run POST to the app with a csv of transactions:
+    * Open Postman
+    * Creat a POST to `localhost:5000/transactions`
+    * Under 'Body', select 'form-data'
+    * Enter in the top row under 'KEY', `a_csv`, and select 'FILE' in the dropdown in the same cell
+    * In the 'VALUE' column, select the `three_row.csv` located under the `test` folder
+    * HIT SEND!
+3. Check database that two rows are in the `transactions` table
+
+
+
+## PostgreSQL Notes
 
 ### Manual steps with `PGDATA` env variable unset:
 
@@ -39,10 +68,17 @@ Stop the server: `$ pg_ctl stop`
 set the environment variable: `export PGDATA='/usr_/local/var/postgres'`
 start the postgres server: `$ pg_ctl start`
 
+!OR!
+
+if you want postgres to simply restar at login: `$ brew services start postgresql`
+(I'm just doing it the hard/slow way to learn)
+
+
 Helpful links:
 https://tableplus.io/blog/2018/10/how-to-start-stop-restart-postgresql-server.html
 https://www.postgresql.org/docs/current/storage-file-layout.html
 https://stackoverflow.com/questions/7975414/how-to-check-status-of-postgresql-server-mac-os-x
+https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb
 
 #### psql command line tips
 
