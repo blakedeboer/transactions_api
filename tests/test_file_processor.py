@@ -30,7 +30,7 @@ class TestFileProcessor():
         file_processor._create_headers_index_dict()
         assert file_processor.headers_index_dict == expected_map
         
-    def test_process_file(self):
+    def test_process(self):
         print("file")
         print(self.test_file)
         # import pdb; pdb.set_trace()
@@ -38,4 +38,15 @@ class TestFileProcessor():
         file_processor = FileProcessor(self.test_file)
         file_processor._get_headers_from_file()
         self.test_file = 'asdf'
-        assert 5 == 5
+
+        expected = [
+            {
+                'Amount': '-1.36',
+                'Description': 'SWEETGREEN UNION SQUAR NEW YORK, NY, US'
+            },
+            {
+                'Amount': '200.16',
+                'Description': 'PAYROLL~ Future Amount: 200.16 ~ Tran: DDIR'
+            }   
+        ]
+        assert file_processor.process() == expected

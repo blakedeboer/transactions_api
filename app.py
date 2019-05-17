@@ -2,6 +2,7 @@ from flask import Flask, request
 from models import db, Transaction
 from flask_migrate import Migrate
 from utils import get_row_objects
+from file_processor.file_processor import FileProcessor
 
 import csv
 import io
@@ -31,18 +32,30 @@ def welcome():
 def transactions_handler():
     if request.method == "POST":
         file = request.files["a_csv"]
-        # import pdb; pdb.set_trace()
-
-        row_count = 10
+        processor = FileProcessor(file)
+        rows = processor.process()
+        for row in rows:
+            amount = get_amount(row)
+            description = row[" Description"]
+            new_transaction = Transaction(amount, description)
+            db.session.add(new_transaction)
+        db.session.commit()
+        row_count = len(rows)
         return f"you posted {row_count} transactions"
     else:
         return "you getted"
 
-def get_headers_from_file(file):
-    first_row_as_byte = file.stream.readline()
-    first_row_as_string = first_row_as_byte.decode("UTF8")
-    first_row_without_new_line_chars = first_row_as_string.rstrip("\n")
-    return [header.strip() for header in first_row_without_new_line_chars.split(",")]
+
+def get_amount(row):
+    float_amt_with_cents = float(row["Amount"])
+    return int(float_amt_with_cents*100)
+
+
+# def get_headers_from_file(file):
+#     first_row_as_byte = file.stream.readline()
+#     first_row_as_string = first_row_as_byte.decode("UTF8")
+#     first_row_without_new_line_chars = first_row_as_string.rstrip("\n")
+#     return [header.strip() for header in first_row_without_new_line_chars.split(",")]
 
 if __name__ == "__main__":
     app.run()
