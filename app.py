@@ -23,6 +23,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 
+def create_app(config_filename):
+    app = Flask(__name__)
+    app.config.from_pyfile(config_filename)
+
+    from models import db
+    db.init_app(app)
+
+    return app
+
 
 @app.route("/")
 def welcome():
