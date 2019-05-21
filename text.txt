@@ -1,0 +1,1 @@
+curl "https://api.trello.com/1/boards/FGicIQAb/cards/?limit=2&fields=name,desc&members=true&member_fields=fullName&key=7ad2ad4d82afc108f18dd2d7fd266525&token=b8eb942712eae0e1e384d7f6c070fc0a985405cb228ff21da586ce5b878f9854"
